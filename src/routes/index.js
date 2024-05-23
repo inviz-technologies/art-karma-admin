@@ -1,9 +1,11 @@
 import { lazy } from "react";
+import SingleOrder from "../pages/protected/Orders/SingleOrder";
 
 const Dashboard = lazy(() => import("../pages/protected/Dashboard"));
 const Welcome = lazy(() => import("../pages/protected/Welcome"));
 const Page404 = lazy(() => import("../pages/protected/404"));
 const Users = lazy(() => import("../pages/protected/Users/Users"));
+const Orders = lazy(() => import("../pages/protected/Orders/Orders"));
 const CustomerProfile = lazy(() =>
   import("../pages/protected/Users/CustomerProfile")
 );
@@ -25,6 +27,14 @@ const routes = [
   {
     path: "/users",
     component: Users,
+  },
+  {
+    path: "/orders",
+    component: Orders,
+  },
+  {
+    path: "/orders/:id",
+    component: SingleOrder,
   },
   {
     path: "/users/:id",
