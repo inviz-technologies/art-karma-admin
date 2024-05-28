@@ -17,6 +17,7 @@ import ApiLoader from "../../components/ApiLoader";
 import { useOrdersQuery } from "../../services/ordersQueries";
 import { useState } from "react";
 import { api } from "../../services/axiosInstance";
+import { useDeleteOrderMutation } from "../../services/orderMutations";
 
 // const TopSideButtons = () => {
 //   const dispatch = useDispatch();
@@ -48,34 +49,39 @@ function Leads() {
   const dispatch = useDispatch();
   const { data: orders, error, isPending, isError } = useOrdersQuery();
   const [isLoading, setIsLoading] = useState(false);
+  const deleteOrderMutation = useDeleteOrderMutation();
 
   console.log("orders data", orders);
 
-
-  const handleDeleteOrder = async (id) => {
-    setIsLoading(true);
-    try {
-      const { data } = await api.delete(`/api/v1/orders/${id}`);
-      if (data) {
-        console.log("delete data",data);
-        setIsLoading(false);
-        dispatch(
-          openModal({
-            title: "Confirmation",
-            bodyType: MODAL_BODY_TYPES.CONFIRMATION,
-            extraObject: {
-              message: `Are you sure you want to delete this Order?`,
-              type: CONFIRMATION_MODAL_CLOSE_TYPES.LEAD_DELETE,
-              index:id,
-            },
-          })
-        );
-      }
-    } catch (error) {
-      setIsLoading(false);
-      console.log("Payment_link_error", error);
-    }
+  const handleDeleteOrder = (orderId) => {
+    deleteOrderMutation.mutate(orderId);
   };
+
+
+  // const handleDeleteOrder = async (id) => {
+  //   setIsLoading(true);
+  //   try {
+  //     const { data } = await api.delete(`/api/v1/orders/${id}`);
+  //     if (data) {
+  //       console.log("delete data",data);
+  //       setIsLoading(false);
+  //       dispatch(
+  //         openModal({
+  //           title: "Confirmation",
+  //           bodyType: MODAL_BODY_TYPES.CONFIRMATION,
+  //           extraObject: {
+  //             message: `Are you sure you want to delete this Order?`,
+  //             type: CONFIRMATION_MODAL_CLOSE_TYPES.LEAD_DELETE,
+  //             index:id,
+  //           },
+  //         })
+  //       );
+  //     }
+  //   } catch (error) {
+  //     setIsLoading(false);
+  //     console.log("Payment_link_error", error);
+  //   }
+  // };
 
 
   if (isPending) {

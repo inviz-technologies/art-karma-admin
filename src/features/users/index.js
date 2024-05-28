@@ -14,6 +14,8 @@ import { useUsersQuery } from "../../services/usersQueries";
 import { convertDateFormat } from "./../../utils/helpers";
 import ErrorAlert from "../../components/ErrorAlert";
 import ApiLoader from "../../components/ApiLoader";
+import { useDeleteUserMutation } from "../../services/usersMutation";
+import { deleteUser } from "../../services/usersApi";
 
 // const TopSideButtons = () => {
 //   const dispatch = useDispatch();
@@ -44,20 +46,26 @@ function Leads() {
 
   const dispatch = useDispatch();
   const { data: users, error, isPending, isError } = useUsersQuery();
+  const deleteUserMutation = useDeleteUserMutation();
 
-  const deleteCurrentLead = (index) => {
-    dispatch(
-      openModal({
-        title: "Confirmation",
-        bodyType: MODAL_BODY_TYPES.CONFIRMATION,
-        extraObject: {
-          message: `Are you sure you want to delete this User?`,
-          type: CONFIRMATION_MODAL_CLOSE_TYPES.LEAD_DELETE,
-          index,
-        },
-      })
-    );
+
+  const handleDeleteUser = (userId) => {
+    deleteUserMutation.mutate(userId);
   };
+
+  // const deleteCurrentLead = (index) => {
+  //   dispatch(
+  //     openModal({
+  //       title: "Confirmation",
+  //       bodyType: MODAL_BODY_TYPES.CONFIRMATION,
+  //       extraObject: {
+  //         message: `Are you sure you want to delete this User?`,
+  //         type: CONFIRMATION_MODAL_CLOSE_TYPES.LEAD_DELETE,
+  //         index,
+  //       },
+  //     })
+  //   );
+  // };
 
   if (isPending) {
     return <ApiLoader />;
@@ -117,7 +125,7 @@ function Leads() {
                       </button>
                       <button
                         className="btn btn-ghost"
-                        onClick={() => deleteCurrentLead(user._id)}
+                        onClick={() => handleDeleteUser(user._id)}
                       >
                         <div className="tooltip" data-tip="Delete User">
                           <TrashIcon className="w-5" />

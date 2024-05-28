@@ -1,24 +1,23 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteOrder } from "./ordersApi";
 
-export const useDeletOrderMutation = () => {
+export const useDeleteOrderMutation = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
-    mutationFn: (id) => {
-      return () => deleteOrder(id);
-    },
+    mutationFn: (id) => deleteOrder(id), // Correctly call the deleteOrder function
     onMutate: () => {
       console.log("Mutate");
     },
-
     onError: (error, variables, context) => {
-      // An error happened!
       console.log("Error");
     },
     onSuccess: (data, variables, context) => {
       console.log("Success!");
+      // Invalidate and refetch the orders query
+      queryClient.invalidateQueries(["Orders"]);
     },
     onSettled: (data, error, variables, context) => {
-      // Error or success... doesn't matter!
       console.log("Settled");
     },
   });

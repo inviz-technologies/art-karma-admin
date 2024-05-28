@@ -12,7 +12,7 @@ export const getOrder = async (id) => {
 
 
 export const deleteOrder = async (id) => {
-    const { data } = await api.delete(`/api/v1/order/${id}`);
+    const { data } = await api.delete(`/api/v1/orders/${id}`);
     return data;
   };
   
