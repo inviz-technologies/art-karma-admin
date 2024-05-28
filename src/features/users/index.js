@@ -51,6 +51,8 @@ function Leads() {
 
   const handleDeleteUser = (userId) => {
     deleteUserMutation.mutate(userId);
+    dispatch(showNotification({message : "User has been deleted!", status : 1}))
+
   };
 
   // const deleteCurrentLead = (index) => {

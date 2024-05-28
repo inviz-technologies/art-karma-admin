@@ -55,6 +55,8 @@ function Leads() {
 
   const handleDeleteOrder = (orderId) => {
     deleteOrderMutation.mutate(orderId);
+    dispatch(showNotification({message : "Order has been deleted!", status : 1}))
+
   };
 
 
