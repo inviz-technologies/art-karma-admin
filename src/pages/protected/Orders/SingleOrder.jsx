@@ -110,7 +110,7 @@ const SingleOrder = () => {
             </div>
             <div className="flex gap-3 items-center">
               <span className=" text-md font-semibold">Price:</span>
-              <span className=" text-md font-semibold">{order?.order.price}</span>
+              <span className=" text-md font-semibold">{order?.subTotal}</span>
             </div>
             <div className="flex gap-3 items-center">
               <span className=" text-md font-semibold">Order Status</span>

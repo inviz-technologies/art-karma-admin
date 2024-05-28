@@ -97,7 +97,8 @@ function Leads() {
           <table className="table w-full">
             <thead>
               <tr>
-                <th>Name</th>
+              <th>Client Name</th>
+                <th>Product Name</th>
                 <th>Price</th>
                 <th>Quantity</th>
                 <th>Order Status</th>
@@ -111,11 +112,17 @@ function Leads() {
                   <tr key={order?.order_id}>
                     <td>
                       <div className="flex items-center space-x-3">
+                        <div className="font-bold">{order?.user?.name}</div>
+                        {/* <div className="text-sm opacity-70">{l.last_name}</div> */}
+                      </div>
+                    </td>
+                    <td>
+                      <div className="flex items-center space-x-3">
                         <div className="font-bold">{order?.order.name}</div>
                         {/* <div className="text-sm opacity-70">{l.last_name}</div> */}
                       </div>
                     </td>
-                    <td>$ {order?.order.price}</td>
+                    <td>$ {order?.subTotal}</td>
                     <td>{order?.quantity}</td>
                     {/* <td>{convertDateFormat(order.eventDate)}</td> */}
                     <td>{order?.orderStatus}</td>
